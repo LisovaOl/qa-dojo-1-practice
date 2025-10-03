@@ -5,11 +5,11 @@ test("OL-006 Should open search, enter query, and verify navigation", async ({
 }) => {
   await page.goto("https://playwright.dev/");
   await expect(
-    page.getByRole("button", { name: "Search (Ctrl+K)" })
+    page.getByRole("button", { name: "Search" })
   ).toBeVisible();
-  await expect(page.getByLabel("Search (Ctrl+K)")).toContainText("Search");
+  await expect(page.getByLabel("Search")).toContainText("Search");
 
-  await page.getByRole("button", { name: "Search (Ctrl+K)" }).click();
+  await page.getByRole("button", { name: "Search" }).click();
   await expect(page.getByRole("searchbox", { name: "Search" })).toBeVisible();
   await expect(page.locator("body")).toContainText("No recent searches");
 
