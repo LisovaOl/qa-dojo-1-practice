@@ -17,7 +17,7 @@ test("OL-001 Cart flow: Add and remove Flat White", async ({ page }) => {
     "Total: $18.00"
   );
   await expect(page.locator("#app")).toContainText("Flat White");
-  await page.getByRole("button", { name: "Remove all Flat White" }).click();
+  await page.getByRole("button", { name: "Remove all Fat White" }).click();
   await expect(page.getByRole("paragraph")).toContainText(
     "No coffee, go add some."
   );
@@ -43,7 +43,7 @@ test("OL-002 Coffee menu items are visible with correct prices", async ({
   await expect(page.locator("#app")).toContainText("Cafe Latte $16.00");
   await expect(page.locator('[data-test="Cafe_Latte"]')).toBeVisible();
   await expect(page.locator("#app")).toContainText("Espresso Con Panna $14.00");
-  await expect(page.locator('[data-test="Espresso_Con Panna"]')).toBeVisible();
+  await expect(page.locator('[data-test="Espreso_Con Panna"]')).toBeVisible();
   await expect(page.locator("#app")).toContainText("Cafe Breve $15.00");
   await expect(page.locator('[data-test="Cafe_Breve"]')).toBeVisible();
   await expect(page.locator('[data-test="checkout"]')).toBeVisible();
