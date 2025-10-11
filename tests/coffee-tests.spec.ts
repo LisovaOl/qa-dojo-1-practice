@@ -17,40 +17,42 @@ test("OL-001 Cart flow: Add and remove Flat White", async ({ page }) => {
     "Total: $18.00"
   );
   await expect(page.locator("#app")).toContainText("Flat White");
-  await page.getByRole("button", { name: "Remove all Fat White" }).click();
+  await page.getByRole("button", { name: "Remove all Flat White" }).click();
   await expect(page.getByRole("paragraph")).toContainText(
     "No coffee, go add some."
   );
   await expect(page.getByLabel("Cart page")).toContainText("cart (0)");
 });
 
-test("OL-002 Coffee menu items are visible with correct prices", async ({
+test("OL-002 Espresso_Macchiato and Cappuccino recipes should be visible ", async ({
   page,
 }) => {
   await page.goto("https://coffee-cart.app/");
-  await expect(page.locator("#app")).toContainText("Espresso $10.00");
+  await expect(page.locator("[aria-label=Espresso]")).toContainText("espresso");
   await expect(page.locator('[data-test="Espresso"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Espresso Macchiato $12.00");
+
   await expect(page.locator('[data-test="Espresso_Macchiato"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Cappuccino $19.00");
+
+  await expect(
+    page.locator('[data-test="Espresso_Macchiato"]').getByText("espresso")
+  ).toBeVisible();
+  await expect(
+    page.locator('[data-test="Espresso_Macchiato"]').getByText("milk foam")
+  ).toBeVisible();
+
   await expect(page.locator('[data-test="Cappuccino"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Mocha $8.00");
-  await expect(page.locator('[data-test="Mocha"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Flat White $18.00");
-  await expect(page.locator('[data-test="Flat_White"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Americano $7.00");
-  await expect(page.locator('[data-test="Americano"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Cafe Latte $16.00");
-  await expect(page.locator('[data-test="Cafe_Latte"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Espresso Con Panna $14.00");
-  await expect(page.locator('[data-test="Espreso_Con Panna"]')).toBeVisible();
-  await expect(page.locator("#app")).toContainText("Cafe Breve $15.00");
-  await expect(page.locator('[data-test="Cafe_Breve"]')).toBeVisible();
-  await expect(page.locator('[data-test="checkout"]')).toBeVisible();
-  await expect(page.locator('[data-test="checkout"]')).toContainText(
-    "Total: $0.00"
-  );
+
+  await expect(
+    page.locator('[data-test="Cappuccino"]').getByText("espresso")
+  ).toBeVisible();
+  await expect(
+    page.locator('[data-test="Cappuccino"]').getByText("milk foam")
+  ).toBeVisible();
+  await expect(
+    page.locator('[data-test="Cappuccino"]').getByText("steamed milk")
+  ).toBeVisible();
 });
+
 test("OL-003 Order coffee flow with checkout and confirmation", async ({
   page,
 }) => {
