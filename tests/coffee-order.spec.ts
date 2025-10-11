@@ -17,7 +17,7 @@ test.describe("ordering", { tag: "@smoke" }, async () => {
 
     await page
       .getByRole("button", { name: "Remove one Cappuccino" })
-      .click({ clickCount: 5 });
-    await expect(page.getByText("$19.00 x")).toContainText("5");
+      .click({ clickCount: 4 });
+    await expect(page.getByText("$19.00 x")).toContainText("6");
   });
 });
