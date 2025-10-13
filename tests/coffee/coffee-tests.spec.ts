@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-test("OL-001 Cart flow: Add and remove Flat White", async ({ page }) => {
-  await page.goto("https://coffee-cart.app/");
+test("OL-001 Cart flow: Add and remove Flat White", async ({
+  page,
+  baseURL,
+}) => {
+  await page.goto(baseURL);
   await expect(
     page.getByRole("heading", { name: "Flat White $" })
   ).toBeVisible();
@@ -26,8 +29,9 @@ test("OL-001 Cart flow: Add and remove Flat White", async ({ page }) => {
 
 test("OL-002 Espresso_Macchiato and Cappuccino recipes should be visible ", async ({
   page,
+  baseURL,
 }) => {
-  await page.goto("https://coffee-cart.app/");
+  await page.goto(baseURL);
   await expect(page.locator("[aria-label=Espresso]")).toContainText("espresso");
   await expect(page.locator('[data-test="Espresso"]')).toBeVisible();
 
@@ -55,8 +59,9 @@ test("OL-002 Espresso_Macchiato and Cappuccino recipes should be visible ", asyn
 
 test("OL-003 Order coffee flow with checkout and confirmation", async ({
   page,
+  baseURL,
 }) => {
-  await page.goto("https://coffee-cart.app/");
+  await page.goto(baseURL);
   await page.locator('[data-test="Cafe_Latte"]').click();
   await expect(page.locator('[data-test="checkout"]')).toContainText(
     "Total: $16.00"
@@ -77,13 +82,14 @@ test("OL-003 Order coffee flow with checkout and confirmation", async ({
   await expect(page.locator('[data-test="checkout"]')).toContainText(
     "Total: $0.00"
   );
-  await page.goto("https://coffee-cart.app/");
+  await page.goto("");
 });
 
 test("OL-004 UI-Verify Payment details popup elements and close action", async ({
   page,
+  baseURL,
 }) => {
-  await page.goto("https://coffee-cart.app/");
+  await page.goto(baseURL);
   await page.locator('[data-test="checkout"]').click();
 
   await expect(page.getByText("Payment details×We will send")).toBeVisible();
@@ -110,8 +116,9 @@ test("OL-004 UI-Verify Payment details popup elements and close action", async (
 
 test("OL-005 Add Cappuccino to cart, update quantity, verify totals", async ({
   page,
+  baseURL,
 }) => {
-  await page.goto("https://coffee-cart.app/");
+  await page.goto(baseURL);
   await page.locator('[data-test="Cappuccino"]').click();
   await expect(page.getByLabel("Cart page")).toContainText("cart (1)");
   await page.getByRole("link", { name: "Cart page" }).click();

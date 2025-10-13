@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Login", { tag: "@smoke" }, async () => {
   test("OL-10 UI. Sign button - color style", async ({ page }) => {
-    await page.goto("https://demo.learnwebdriverio.com/login");
+    await page.goto("/login");
     await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
     const initialColor = await page
       .locator(".btn-primary")
@@ -16,7 +16,7 @@ test.describe("Login", { tag: "@smoke" }, async () => {
   });
 
   test("OL-11 Sign in. Invalid email or password", async ({ page }) => {
-    await page.goto("https://demo.learnwebdriverio.com/login");
+    await page.goto("/login");
     await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
 
     await page.getByRole("textbox", { name: "Email" }).fill("test@test.com");
@@ -29,7 +29,7 @@ test.describe("Login", { tag: "@smoke" }, async () => {
   });
 
   test("OL-12 Sign in. Blank fields", async ({ page }) => {
-    await page.goto("https://demo.learnwebdriverio.com/login");
+    await page.goto("/login");
 
     await expect(page.getByRole("textbox", { name: "Email" })).toBeEmpty();
     await expect(page.getByRole("textbox", { name: "Password" })).toBeEmpty();

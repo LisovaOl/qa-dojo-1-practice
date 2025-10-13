@@ -2,8 +2,9 @@ import { test, expect } from "@playwright/test";
 
 test("OL-007 Should navigate to Docs and verify key sections are visible", async ({
   page,
+  baseURL,
 }) => {
-  await page.goto("https://playwright.dev/");
+  await page.goto(baseURL);
   await expect(page.getByRole("link", { name: "Docs" })).toBeVisible();
 
   await page.getByRole("link", { name: "Docs" }).click();
@@ -26,8 +27,8 @@ test("OL-007 Should navigate to Docs and verify key sections are visible", async
     page.getByRole("heading", { name: "System requirementsDirect" })
   ).toBeVisible();
 });
-test("OL-008 Switch between dark and light", async ({ page }) => {
-  await page.goto("https://playwright.dev/");
+test("OL-008 Switch between dark and light", async ({ page, baseURL }) => {
+  await page.goto(baseURL);
 
   await expect(
     page.getByRole("button", { name: "Switch between dark and light" })

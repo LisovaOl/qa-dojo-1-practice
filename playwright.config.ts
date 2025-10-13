@@ -26,7 +26,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: "https://coffee-cart.app/",
+    //baseURL: "https://coffee-cart.app/",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "retain-on-failure",
@@ -37,10 +37,36 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: "coffee-cart",
+      testDir: "tests/coffee",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "https://coffee-cart.app/",
+      },
+    },
+    {
+      name: "play-test",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "https://playwright.dev/",
+      },
+    },
+    {
+      name: "conduit-test",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "https://demo.learnwebdriverio.com",
+      },
     },
 
+    {
+      name: "aria-locators",
+
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "file:///D:/Learning/Playwrite1/demo-aria.html",
+      },
+    },
     // {
     //   name: "firefox",
     //   use: { ...devices["Desktop Firefox"] },

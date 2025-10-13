@@ -4,7 +4,7 @@ test.describe("Registration ", { tag: "@smoke" }, async () => {
   test("OL-13 Should show validation errors for empty Username and Email", async ({
     page,
   }) => {
-    await page.goto("https://demo.learnwebdriverio.com/register");
+    await page.goto("/register");
     await expect(page.getByRole("textbox", { name: "Username" })).toBeEmpty();
     await expect(page.getByRole("textbox", { name: "Email" })).toBeEmpty();
     await expect(page.getByRole("textbox", { name: "Password" })).toBeEmpty();
@@ -26,7 +26,7 @@ test.describe("Registration ", { tag: "@smoke" }, async () => {
   test("OL-14 Should show validation error for invalid Email", async ({
     page,
   }) => {
-    await page.goto("https://demo.learnwebdriverio.com/register");
+    await page.goto("/register");
     await page.getByRole("textbox", { name: "Username" }).fill("999");
     await page.getByRole("textbox", { name: "Email" }).fill("test");
 
