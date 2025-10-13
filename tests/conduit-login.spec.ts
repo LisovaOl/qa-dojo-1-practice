@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Login", { tag: "@smoke" }, async () => {
-  test("OL-10 UI. Sign button - color style", async ({ page }) => {
+  test("OL-10 UI. Sign up button - color style", async ({ page }) => {
     await page.goto("/login");
     await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
     const initialColor = await page
@@ -35,16 +35,16 @@ test.describe("Login", { tag: "@smoke" }, async () => {
     await expect(page.getByRole("textbox", { name: "Password" })).toBeEmpty();
     await page.getByRole("button", { name: "Sign in" }).click();
 
-    await expect(page.getByText("email can't be blank")).toBeVisible();
+    await expect(page.getByText("email can't be blank")).toBeVisible(); //toBeHidden
     await page.getByRole("textbox", { name: "Email" }).fill("test@test.com");
     await page.getByRole("button", { name: "Sign in" }).click();
 
-    await expect(page.getByText("password can't be blank")).toBeVisible();
+    await expect(page.getByText("password can't be blank")).toBeVisible(); //toBeHidden
 
     await page.getByRole("textbox", { name: "Password" }).fill("11111111");
 
     await page.getByRole("button", { name: "Sign in" }).click();
     await expect(page.getByText("password can't be blank")).toBeHidden();
-    await expect(page.getByText("email or password is invalid")).toBeVisible();
+    await expect(page.getByText("email or password is invalid")).toBeVisible(); //toBeHidden
   });
 });
