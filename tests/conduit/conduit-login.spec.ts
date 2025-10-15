@@ -15,36 +15,47 @@ test.describe("Login", { tag: "@smoke" }, async () => {
     expect(hoverColor).toBe("rgb(68, 157, 68)"); // #449d44
   });
 
-  test("OL-11 Sign in. Invalid email or password", async ({ page }) => {
-    await page.goto("/login");
-    await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
+  test(
+    "OL-11 Sign in. Invalid email or password",
+    { tag: "@smoke" },
+    async ({ page }) => {
+      await page.goto("/login");
+      await expect(
+        page.getByRole("heading", { name: "Sign in" })
+      ).toBeVisible();
 
-    await page.getByRole("textbox", { name: "Email" }).fill("test@test.com");
-    await page.getByRole("button", { name: "Sign in" }).click();
+      await page.getByRole("textbox", { name: "Email" }).fill("test@test.com");
+      await page.getByRole("button", { name: "Sign in" }).click();
 
-    await page.getByRole("textbox", { name: "Password" }).fill("111111");
-    await page.getByRole("button", { name: "Sign in" }).click();
+      await page.getByRole("textbox", { name: "Password" }).fill("111111");
+      await page.getByRole("button", { name: "Sign in" }).click();
 
-    await expect(page.getByText("email or password is invalid")).toBeVisible();
-  });
+      await expect(
+        page.getByText("email or password is invalid")
+      ).toBeVisible();
+    }
+  );
 
-  test("OL-12 Sign in. Blank fields", async ({ page }) => {
+  test("OL-12 Sign in. Blank fields", { tag: "@smoke" }, async ({ page }) => {
     await page.goto("/login");
 
     await expect(page.getByRole("textbox", { name: "Email" })).toBeEmpty();
     await expect(page.getByRole("textbox", { name: "Password" })).toBeEmpty();
     await page.getByRole("button", { name: "Sign in" }).click();
 
-    await expect(page.getByText("email can't be blank")).toBeVisible(); //toBeHidden
+    await expect(page.getByText("email can't be blank")).toBeHidden(); //toBeHidden
     await page.getByRole("textbox", { name: "Email" }).fill("test@test.com");
     await page.getByRole("button", { name: "Sign in" }).click();
 
-    await expect(page.getByText("password can't be blank")).toBeVisible(); //toBeHidden
+    await expect(page.getByText("password can't be blank")).toBeHidden(); //toBeHidden
 
     await page.getByRole("textbox", { name: "Password" }).fill("11111111");
 
     await page.getByRole("button", { name: "Sign in" }).click();
     await expect(page.getByText("password can't be blank")).toBeHidden();
-    await expect(page.getByText("email or password is invalid")).toBeVisible(); //toBeHidden
+    await expect(page.getByText("email or password is invalid")).toBeHidden(); //toBeHidden
+
+    // const errors = page.locator('ul.error-messages>li')
+    // await expect(errors)
   });
 });

@@ -23,26 +23,28 @@ test.describe("Registration ", { tag: "@smoke" }, async () => {
     await expect(page.getByText("username can't be blank")).toBeHidden();
   });
 
-  test("OL-14 Should show validation error for invalid Email", async ({
-    page,
-  }) => {
-    await page.goto("/register");
-    await page.getByRole("textbox", { name: "Username" }).fill("999");
-    await page.getByRole("textbox", { name: "Email" }).fill("test");
+  test(
+    "OL-14 Should show validation error for invalid Email",
+    { tag: "@smoke" },
+    async ({ page }) => {
+      await page.goto("/register");
+      await page.getByRole("textbox", { name: "Username" }).fill("999");
+      await page.getByRole("textbox", { name: "Email" }).fill("test");
 
-    await page.getByRole("button", { name: "Sign up" }).click();
-    await expect(page.getByText("email is invalid")).toBeVisible();
-    await page.getByRole("textbox", { name: "Email" }).fill("test@");
+      await page.getByRole("button", { name: "Sign up" }).click();
+      await expect(page.getByText("email is invalid")).toBeVisible();
+      await page.getByRole("textbox", { name: "Email" }).fill("test@");
 
-    await page.getByRole("button", { name: "Sign up" }).click();
-    await expect(page.getByText("email is invalid")).toBeVisible();
-    await page.getByRole("textbox", { name: "Email" }).fill("test@tt");
+      await page.getByRole("button", { name: "Sign up" }).click();
+      await expect(page.getByText("email is invalid")).toBeVisible();
+      await page.getByRole("textbox", { name: "Email" }).fill("test@tt");
 
-    await page.getByRole("button", { name: "Sign up" }).click();
-    await expect(page.getByText("email is invalid")).toBeVisible();
+      await page.getByRole("button", { name: "Sign up" }).click();
+      await expect(page.getByText("email is invalid")).toBeVisible();
 
-    await page.getByRole("textbox", { name: "Email" }).fill("test@tt.com");
+      await page.getByRole("textbox", { name: "Email" }).fill("test@tt.com");
 
-    await page.getByRole("button", { name: "Sign up" }).click();
-  });
+      await page.getByRole("button", { name: "Sign up" }).click();
+    }
+  );
 });

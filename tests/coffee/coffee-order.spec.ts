@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("ordering", { tag: "@smoke" }, async () => {
-  test("Add and remove Flat White", async ({ page, baseURL }) => {
-    await page.goto(baseURL);
+  test("Add and remove Flat White", async ({ page }) => {
+    await page.goto("");
     await page.locator('[aria-label="Cappuccino"]').click();
     await expect(page.getByLabel("Cart page")).toContainText("cart (1)");
     await page.getByRole("link", { name: "Cart page" }).click();
