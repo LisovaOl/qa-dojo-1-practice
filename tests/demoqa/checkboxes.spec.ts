@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { time } from "console";
 
 test.describe(
   "Check Checkboxes with Xpath",
@@ -10,7 +11,19 @@ test.describe(
         page.locator("//h1[contains(text(),'Check Box')]")
       ).toBeVisible();
 
-      // Check Home checkbox properties
+      await expect(page.locator("//span[text()='Home']")).toBeVisible();
+      await page.locator("//button[@aria-label='Expand all']").click();
+
+      // Клік на чекбокс Home
+      await page
+        .locator("//label[@for='tree-node-home']//span[@class='rct-checkbox']")
+        .click();
+
+      // await expect(
+      //   page.locator(
+      //     "locator('label').filter({ hasText: 'Excel File.doc' }).locator('path').first()"
+      //   )
+      // ).toHaveClass("rct-icon-check");
     });
   }
 );
