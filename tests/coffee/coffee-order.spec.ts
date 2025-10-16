@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("ordering", { tag: "@smoke" }, async () => {
+test.describe("ordering", { tag: ["@smoke", "@regression"] }, async () => {
   test("Add and remove Flat White", async ({ page }) => {
     await page.goto("");
     await page.locator('[aria-label="Cappuccino"]').click();

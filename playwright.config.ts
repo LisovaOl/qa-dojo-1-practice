@@ -37,18 +37,26 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: "demoqa",
+      testDir: "tests/demoqa",
+      use: {
+        ...devices["Desktop Chrome"],
+        baseURL: "https://demoqa.com",
+      },
+    },
+    {
       name: "coffee-cart",
       testDir: "tests/coffee",
       use: {
         ...devices["Desktop Chrome"],
-        baseURL: "https://coffee-cart.app/",
+        baseURL: "https://coffee-cart.app",
       },
     },
     {
       name: "play-test",
       use: {
         ...devices["Desktop Chrome"],
-        baseURL: "https://playwright.dev/",
+        baseURL: "https://playwright.dev",
       },
     },
     {

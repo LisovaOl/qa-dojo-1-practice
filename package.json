@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Playwrite Practice",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "ui": "npx playwright test --ui",
+    "debug": "npx playwright test --debug",
+    "codegen": "npx playwright codegen"
+  },
   "author": "Olena Lisova",
   "license": "ISC",
   "devDependencies": {
