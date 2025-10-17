@@ -18,12 +18,6 @@ test.describe(
       await page
         .locator("//label[@for='tree-node-home']//span[@class='rct-checkbox']")
         .click();
-
-      // await expect(
-      //   page.locator(
-      //     "locator('label').filter({ hasText: 'Excel File.doc' }).locator('path').first()"
-      //   )
-      // ).toHaveClass("rct-icon-check");
     });
   }
 );
