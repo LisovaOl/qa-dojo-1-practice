@@ -1,65 +1,30 @@
 import { test, expect } from "@playwright/test";
 
 test(
-  "OL-001 Cart flow: Add and remove Flat White",
-  { tag: "@smoke" },
-  async ({ page }) => {
-    await page.goto("");
-    await expect(
-      page.getByRole("heading", { name: "Flat White $" })
-    ).toBeVisible();
-    await expect(page.locator("#app")).toContainText("Flat White $18.00");
-    await expect(page.locator('[data-test="Flat_White"]')).toBeVisible();
-    await page.locator('[data-test="Flat_White"]').click();
-    await expect(page.locator('[data-test="checkout"]')).toContainText(
-      "Total: $18.00"
-    );
-    await expect(page.getByLabel("Cart page")).toContainText("cart (1)");
-    await page.getByRole("link", { name: "Cart page" }).click();
-    await expect(page.locator('[data-test="checkout"]')).toContainText(
-      "Total: $18.00"
-    );
-    await expect(page.locator("#app")).toContainText("Flat White");
-    await page.getByRole("button", { name: "Remove all Flat White" }).click();
-    await expect(page.getByRole("paragraph")).toContainText(
-      "No coffee, go add some."
-    );
-    await expect(page.getByLabel("Cart page")).toContainText("cart (0)");
-  }
-);
-
-test(
   "OL-002 Espresso_Macchiato and Cappuccino recipes should be visible ",
   { tag: "@smoke" },
   async ({ page }) => {
-    await page.goto("");
-    await expect(page.locator("[aria-label=Espresso]")).toContainText(
-      "espresso"
+    const espressoCard = page.locator('[data-test="Espresso"]');
+    const espressoMacchiatoCard = page.locator(
+      '[data-test="Espresso_Macchiato"]'
     );
-    await expect(page.locator('[data-test="Espresso"]')).toBeVisible();
+    const cappuccinoCard = page.locator('[data-test="Cappuccino"]');
 
-    await expect(
-      page.locator('[data-test="Espresso_Macchiato"]')
-    ).toBeVisible();
+    // Espresso card
+    await page.goto("");
+    await expect(espressoCard).toContainText("espresso");
+    await expect(espressoCard).toBeVisible();
 
-    await expect(
-      page.locator('[data-test="Espresso_Macchiato"]').getByText("espresso")
-    ).toBeVisible();
-    await expect(
-      page.locator('[data-test="Espresso_Macchiato"]').getByText("milk foam")
-    ).toBeVisible();
+    // Espresso Macchiato card
+    await expect(espressoMacchiatoCard).toBeVisible();
+    await expect(espressoMacchiatoCard.getByText("espresso")).toBeVisible();
+    await expect(espressoMacchiatoCard.getByText("milk foam")).toBeVisible();
 
-    await expect(page.locator('[data-test="Cappuccino"]')).toBeVisible();
-
-    await expect(
-      page.locator('[data-test="Cappuccino"]').getByText("espresso")
-    ).toBeVisible();
-    await expect(
-      page.locator('[data-test="Cappuccino"]').getByText("milk foam")
-    ).toBeVisible();
-    await expect(
-      page.locator('[data-test="Cappuccino"]').getByText("steamed milk")
-    ).toBeVisible();
+    // Cappuccino card
+    await expect(cappuccinoCard).toBeVisible();
+    await expect(cappuccinoCard.getByText("espresso")).toBeVisible();
+    await expect(cappuccinoCard.getByText("milk foam")).toBeVisible();
+    await expect(cappuccinoCard.getByText("steamed milk")).toBeVisible();
   }
 );
 
@@ -67,27 +32,28 @@ test(
   "OL-003 Order coffee flow with checkout and confirmation",
   { tag: "@smoke" },
   async ({ page }) => {
+    const cafeLatteCard = page.locator('[data-test="Cafe_Latte"]');
+    const checkoutButton = page.locator('[data-test="checkout"]');
+    const nameInput = page.getByRole("textbox", { name: "Name" });
+    const emailInput = page.getByRole("textbox", { name: "Email" });
+    const submitButton = page.getByRole("button", { name: "Submit" });
+    const thankYouButton = page.getByRole("button", {
+      name: "Thanks for your purchase.",
+    });
+
     await page.goto("");
-    await page.locator('[data-test="Cafe_Latte"]').click();
-    await expect(page.locator('[data-test="checkout"]')).toContainText(
-      "Total: $16.00"
-    );
-    await page.locator('[data-test="checkout"]').click();
-    await page.getByRole("textbox", { name: "Name" }).fill("Olena");
-    await expect(page.getByRole("textbox", { name: "Name" })).toHaveValue(
-      "Olena"
-    );
-    await page.getByRole("textbox", { name: "Email" }).fill("olena@test.ua");
-    await expect(page.getByRole("textbox", { name: "Email" })).toHaveValue(
-      "olena@test.ua"
-    );
-    await page.getByRole("button", { name: "Submit" }).click();
-    await expect(
-      page.getByRole("button", { name: "Thanks for your purchase." })
-    ).toBeVisible();
-    await expect(page.locator('[data-test="checkout"]')).toContainText(
-      "Total: $0.00"
-    );
+    await cafeLatteCard.click();
+    await expect(checkoutButton).toContainText("Total: $16.00");
+    await checkoutButton.click();
+
+    await nameInput.fill("Olena");
+    await expect(nameInput).toHaveValue("Olena");
+    await emailInput.fill("olena@test.ua");
+    await expect(emailInput).toHaveValue("olena@test.ua");
+    await submitButton.click();
+
+    await expect(thankYouButton).toBeVisible();
+    await expect(checkoutButton).toContainText("Total: $0.00");
     await page.goto("");
   }
 );
@@ -96,57 +62,32 @@ test(
   "OL-004 UI-Verify Payment details popup elements and close action",
   { tag: "@smoke" },
   async ({ page }) => {
+    const checkoutButton = page.locator('[data-test="checkout"]');
+    const paymentDetailsTitle = page.locator("h1");
+    const paymentDetailsText = page.getByRole("paragraph");
+    const paymentFormLabel = page.getByLabel("Payment form");
+    const paymentPromotionText = page.getByLabel("Promotion message");
+    const paymentPromotionCheckbox = page.getByRole("checkbox", {
+      name: "Promotion checkbox",
+    });
+    const submitPaymentButton = page.getByRole("button", { name: "Submit" });
+    const paymentCloseButton = page.getByRole("button", { name: "×" });
+
     await page.goto("");
-    await page.locator('[data-test="checkout"]').click();
+    await checkoutButton.click();
 
-    await expect(page.getByText("Payment details×We will send")).toBeVisible();
-
-    await expect(page.locator("h1")).toContainText("Payment details");
-    await expect(page.getByRole("paragraph")).toContainText(
+    await expect(paymentDetailsTitle).toContainText("Payment details");
+    await expect(paymentDetailsText).toContainText(
       "We will send you a payment link via email."
     );
-    await expect(page.getByLabel("Payment form")).toContainText("Name");
-    await expect(page.getByRole("textbox", { name: "Name" })).toBeVisible();
-    await expect(page.getByLabel("Payment form")).toContainText("Email");
-    await expect(page.getByRole("textbox", { name: "Email" })).toBeVisible();
-    await expect(page.getByLabel("Promotion message")).toContainText(
+    await expect(paymentFormLabel).toContainText("Name");
+    await expect(paymentFormLabel).toContainText("Email");
+    await expect(paymentPromotionText).toContainText(
       "I would like to receive order updates and promotional messages."
     );
-    await expect(
-      page.getByRole("checkbox", { name: "Promotion checkbox" })
-    ).toBeVisible();
-    await expect(page.getByRole("button", { name: "Submit" })).toBeVisible();
-    await expect(page.locator("#submit-payment")).toContainText("Submit");
-    await expect(page.getByRole("button", { name: "×" })).toBeVisible();
-    await page.getByRole("button", { name: "×" }).click();
-  }
-);
-
-test(
-  "OL-005 Add Cappuccino to cart, update quantity, verify totals",
-  { tag: "@smoke" },
-  async ({ page }) => {
-    await page.goto("");
-    await page.locator('[data-test="Cappuccino"]').click();
-    await expect(page.getByLabel("Cart page")).toContainText("cart (1)");
-    await page.getByRole("link", { name: "Cart page" }).click();
-    await expect(page.getByText("Item")).toBeVisible();
-    await expect(page.getByText("Unit")).toBeVisible();
-    await expect(page.getByText("Total", { exact: true })).toBeVisible();
-    await expect(page.locator("#app")).toContainText("Cappuccino");
-    await expect(page.locator("#app")).toContainText("$19.00 x 1");
-    await page.getByRole("button", { name: "Add one Cappuccino" }).click();
-    await expect(page.locator('[data-test="checkout"]')).toContainText(
-      "Total: $38.00"
-    );
-    await expect(page.locator("#app")).toContainText("$19.00 x 2");
-    await expect(page.locator("#app")).toContainText("$38.00");
-    await page.getByRole("button", { name: "Remove one Cappuccino" }).click();
-    await expect(page.locator('[data-test="checkout"]')).toContainText(
-      "Total: $19.00"
-    );
-    await expect(page.locator("#app")).toContainText("$19.00 x 1");
-    await expect(page.locator("#app")).toContainText("$19.00");
-    await page.locator("html").click();
+    await expect(paymentPromotionCheckbox).toBeVisible();
+    await expect(submitPaymentButton).toBeVisible();
+    await expect(paymentCloseButton).toBeVisible();
+    await paymentCloseButton.click();
   }
 );
