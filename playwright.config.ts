@@ -37,31 +37,33 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "demoqa",
-      testDir: "tests/demoqa",
+      name: "demo-qa-site",
+      testDir: "tests/demo-qa-site",
       use: {
         ...devices["Desktop Chrome"],
         baseURL: "https://demoqa.com",
       },
     },
     {
-      name: "coffee-cart",
-      testDir: "tests/coffee",
+      name: "coffee-site",
+      testDir: "tests/coffee-site",
       use: {
         ...devices["Desktop Chrome"],
         baseURL: "https://coffee-cart.app",
       },
     },
     {
-      name: "play-test",
+      name: "playwrite-site",
+      testDir: "tests/playwrite-site",
+
       use: {
         ...devices["Desktop Chrome"],
         baseURL: "https://playwright.dev",
       },
     },
     {
-      name: "conduit-test",
-      testDir: "tests/conduit",
+      name: "conduit-site",
+      testDir: "tests/conduit-site",
       use: {
         ...devices["Desktop Chrome"],
         baseURL: "https://demo.learnwebdriverio.com",
@@ -69,7 +71,8 @@ export default defineConfig({
     },
 
     {
-      name: "aria-locators",
+      name: "demo-aria-local",
+      testDir: "tests/demo-aria-local",
 
       use: {
         ...devices["Desktop Chrome"],
