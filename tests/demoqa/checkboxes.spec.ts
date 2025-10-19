@@ -11,13 +11,38 @@ test.describe(
         page.locator("//h1[contains(text(),'Check Box')]")
       ).toBeVisible();
 
-      await expect(page.locator("//span[text()='Home']")).toBeVisible();
       await page.locator("//button[@aria-label='Expand all']").click();
 
-      // Клік на чекбокс Home
-      await page
-        .locator("//label[@for='tree-node-home']//span[@class='rct-checkbox']")
-        .click();
+      // Check Home Checkbox
+      const homeCheckbox = page.locator('//label[@for="tree-node-home"]');
+      await expect(homeCheckbox).not.toBeChecked();
+      await homeCheckbox.click();
+      await expect(homeCheckbox).toBeChecked();
+
+      // Check Commands Checkbox
+      const commandsCheckbox = page.locator(
+        '//label[@for="tree-node-commands"]'
+      );
+      await expect(commandsCheckbox).toBeChecked();
+      await commandsCheckbox.click();
+      await expect(commandsCheckbox).not.toBeChecked();
+
+      // Check Office Checkbox
+      const officeCheckbox = page.locator('//label[@for="tree-node-office"]');
+      await expect(officeCheckbox).toBeChecked();
+      await officeCheckbox.click();
+      await expect(officeCheckbox).not.toBeChecked();
+      await expect(
+        page.locator("//label[@for='tree-node-public']")
+      ).not.toBeChecked();
+
+      // Check excelFile Checkbox
+      const excelFileCheckbox = page.locator(
+        '//label[@for="tree-node-excelFile"]'
+      );
+      await expect(excelFileCheckbox).toBeChecked();
+      await excelFileCheckbox.click();
+      await expect(excelFileCheckbox).not.toBeChecked();
     });
   }
 );
