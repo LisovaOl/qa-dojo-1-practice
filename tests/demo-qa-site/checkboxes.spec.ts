@@ -23,6 +23,7 @@ test.describe(
       await page.goto("/checkbox");
       await expect(checkboxTitle).toBeVisible();
 
+      // Expand All Button Click
       await expandAllButton.click();
 
       // Check Home Checkbox
