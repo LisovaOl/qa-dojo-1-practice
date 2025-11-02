@@ -11,9 +11,6 @@ test.describe(
         "//button[@aria-label='Expand all']"
       );
       const homeCheckbox = page.locator('//label[@for="tree-node-home"]');
-      const commandsCheckbox = page.locator(
-        '//label[@for="tree-node-commands"]'
-      );
       const officeCheckbox = page.locator('//label[@for="tree-node-office"]');
       const publicCheckbox = page.locator('//label[@for="tree-node-public"]');
       const excelFileCheckbox = page.locator(
@@ -32,9 +29,13 @@ test.describe(
       await expect(homeCheckbox).toBeChecked();
 
       // Check Commands Checkbox
-      await expect(commandsCheckbox).toBeChecked();
-      await commandsCheckbox.click();
-      await expect(commandsCheckbox).not.toBeChecked();
+      const commandsCheckboxLocator = page.locator(
+        '//label[@for="tree-node-commands"]'
+      );
+
+      await expect(commandsCheckboxLocator).toBeChecked();
+      await commandsCheckboxLocator.click();
+      await expect(commandsCheckboxLocator).not.toBeChecked();
 
       // Check Office Checkbox
       await expect(officeCheckbox).toBeChecked();
