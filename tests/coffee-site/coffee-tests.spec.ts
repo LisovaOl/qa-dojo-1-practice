@@ -1,4 +1,12 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, Page } from "@playwright/test";
+import {
+  clickOnCheckoutButton,
+  clickOnLatte,
+  clickOnSubmitButton,
+  clickOnPaymentCloseButton,
+  fillName,
+  fillEmail,
+} from "./functions";
 
 test(
   "OL-002 Espresso_Macchiato and Cappuccino recipes should be visible ",
@@ -32,25 +40,25 @@ test(
   "OL-003 Order coffee flow with checkout and confirmation",
   { tag: "@smoke" },
   async ({ page }) => {
-    const cafeLatteCard = page.locator('[data-test="Cafe_Latte"]');
     const checkoutButton = page.locator('[data-test="checkout"]');
     const nameInput = page.getByRole("textbox", { name: "Name" });
     const emailInput = page.getByRole("textbox", { name: "Email" });
-    const submitButton = page.getByRole("button", { name: "Submit" });
     const thankYouButton = page.getByRole("button", {
       name: "Thanks for your purchase.",
     });
+    const userName = "Olena13";
+    const userEmail = "olena@test.ua";
 
     await page.goto("");
-    await cafeLatteCard.click();
+    await clickOnLatte(page);
     await expect(checkoutButton).toContainText("Total: $16.00");
-    await checkoutButton.click();
+    await clickOnCheckoutButton(page);
 
-    await nameInput.fill("Olena");
-    await expect(nameInput).toHaveValue("Olena");
-    await emailInput.fill("olena@test.ua");
-    await expect(emailInput).toHaveValue("olena@test.ua");
-    await submitButton.click();
+    await fillName(page, userName);
+    await expect(nameInput).toHaveValue(userName);
+    await fillEmail(page, userEmail);
+    await expect(emailInput).toHaveValue(userEmail);
+    await clickOnSubmitButton(page);
 
     await expect(thankYouButton).toBeVisible();
     await expect(checkoutButton).toContainText("Total: $0.00");
@@ -62,7 +70,7 @@ test(
   "OL-004 UI-Verify Payment details popup elements and close action",
   { tag: "@smoke" },
   async ({ page }) => {
-    const checkoutButton = page.locator('[data-test="checkout"]');
+    // const checkoutButton = page.locator('[data-test="checkout"]');
     const paymentDetailsTitle = page.locator("h1");
     const paymentDetailsText = page.getByRole("paragraph");
     const paymentFormLabel = page.getByLabel("Payment form");
@@ -74,7 +82,7 @@ test(
     const paymentCloseButton = page.getByRole("button", { name: "×" });
 
     await page.goto("");
-    await checkoutButton.click();
+    await clickOnCheckoutButton(page);
 
     await expect(paymentDetailsTitle).toContainText("Payment details");
     await expect(paymentDetailsText).toContainText(
@@ -88,6 +96,6 @@ test(
     await expect(paymentPromotionCheckbox).toBeVisible();
     await expect(submitPaymentButton).toBeVisible();
     await expect(paymentCloseButton).toBeVisible();
-    await paymentCloseButton.click();
+    await clickOnPaymentCloseButton(page);
   }
 );

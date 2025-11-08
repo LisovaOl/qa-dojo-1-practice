@@ -53,16 +53,16 @@ checkNumberType("100");
 
 function checkTime(time) {
   if (typeof time !== "number") {
-    console.log("Це не числове значення");
+    return "Це не числове значення";
   } else if (time < 0 || time > 24) {
-    console.log("Невірно вказаний час");
+    return "Невірно вказаний час";
   } else if (time > 4 && time <= 11) {
-    console.log("Доброго ранку!");
+    return "Доброго ранку!";
   } else if (time > 11 && time <= 16) {
-    console.log("Доброго дня!");
+    return "Доброго дня!";
   } else if (time > 16 && time <= 21) {
-    console.log("Доброго вечора!");
-  } else console.log("Доброї ночі!");
+    return "Доброго вечора!";
+  } else "Доброї ночі!";
 }
 checkTime(4);
 checkTime("r");
@@ -89,8 +89,8 @@ checkTime(-1);
 function checkTestPass(score) {
   if (typeof score !== "number") {
     console.log("Це не числове значення!");
-  } else if (score < 0) {
-    console.log("Ви ввели від'ємне число");
+  } else if (score < 0 || score > 201) {
+    console.log("Число повинно бути в діапазоні 0 - 200");
   } else if (score >= 0 && score < 50) {
     console.log("Тест не складено");
   } else if (score >= 50) {

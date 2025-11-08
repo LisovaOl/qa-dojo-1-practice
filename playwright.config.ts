@@ -79,10 +79,10 @@ export default defineConfig({
         baseURL: "file:///D:/Learning/Playwrite1/demo-aria.html",
       },
     },
-    // {
-    //   name: "firefox",
-    //   use: { ...devices["Desktop Firefox"] },
-    // },
+    {
+      name: "unit-tests",
+      testDir: "tests/unit-tests",
+    },
 
     // {
     //   name: "webkit",
