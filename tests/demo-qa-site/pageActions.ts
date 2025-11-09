@@ -1,5 +1,21 @@
 import { Page } from "@playwright/test";
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Functions for Check Box Page
 // Function Expand All Button Click
 export async function clickOnExpandAllButton(page: Page) {
   await page.locator("//button[@aria-label='Expand all']").click();
