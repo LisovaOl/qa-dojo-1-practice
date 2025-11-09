@@ -96,7 +96,7 @@ test("OL-15 Add 10 Articled and deleted them", async ({ page }) => {
       .getByRole("link", { name: articleTitles[articleTitles.length - 1 - i] })
       .click();
 
-  await page.getByRole("button", { name: "Delete Article" }).nth(1).click();
+  await deleteArticle(page);
 
   //await expect(page.getByRole('link', { name: 'Global Feed' })).toBeVisible();
   }

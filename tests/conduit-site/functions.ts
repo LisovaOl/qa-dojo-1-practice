@@ -5,5 +5,5 @@ await page.getByRole("button", { name: "Publish Article" }).click();
 }
 
 export async function deleteArticle(page:Page) {
-  await page.getByRole("button", { name: "Delete Article" }).click();
+  await page.getByRole("button", { name: "Delete Article" }).nth(1).click();
 }
