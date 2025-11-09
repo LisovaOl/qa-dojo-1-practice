@@ -1,13 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { publishArticle, deleteArticle } from "./functions";
 
 test("OL-15 Add 10 Articled and deleted them", async ({ page }) => {
   await page.goto("");
 
-  // Sign in
-  await page.getByRole("link", { name: "Sign in" }).click();
-  await page.getByRole("textbox", { name: "Email" }).fill("testol@test.ua");
-  await page.getByRole("textbox", { name: "Password" }).fill("test");
-  await page.getByRole("button", { name: "Sign in" }).click();
+  const user =['testol@test.ua', 'test'];
 
   const articleTitles = [
     "Getting Started with OL",
@@ -47,6 +44,12 @@ test("OL-15 Add 10 Articled and deleted them", async ({ page }) => {
     "A detailed comparison between OL and similar tools.",
     "Predictions and trends shaping the evolution of OL.",
   ];
+  // Sign in
+  await page.getByRole("link", { name: "Sign in" }).click();
+  await page.getByRole("textbox", { name: "Email" }).fill(user[0]);
+  await page.getByRole("textbox", { name: "Password" }).fill(user[1]);
+  await page.getByRole("button", { name: "Sign in" }).click();
+
 
   for (let i = 0; i < 10; i++) {
     // Open New Article Form
@@ -64,7 +67,7 @@ test("OL-15 Add 10 Articled and deleted them", async ({ page }) => {
       .fill(articleTexts[i]);
 
     // Publish article
-    await page.getByRole("button", { name: "Publish Article" }).click();
+    await publishArticle(page);
 
     // Check visibility
     await expect(
@@ -83,9 +86,18 @@ test("OL-15 Add 10 Articled and deleted them", async ({ page }) => {
 
   // Delete all added articles
   for (let i = 0; i < 10; i++) {
-    await page
+      await page
+    .locator('//*[@id="app"]/nav/div/ul/li[4]/a')
+    .click();
+
+  //await expect(page.getByRole("link", { name: "My Articles" })).toBeVisible();
+
+  await page
       .getByRole("link", { name: articleTitles[articleTitles.length - 1 - i] })
       .click();
-    await page.getByRole("button", { name: "Delete Article" }).nth(1).click();
+
+  await page.getByRole("button", { name: "Delete Article" }).nth(1).click();
+
+  //await expect(page.getByRole('link', { name: 'Global Feed' })).toBeVisible();
   }
 });
