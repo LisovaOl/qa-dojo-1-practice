@@ -1,5 +1,6 @@
 
 
+editor.inlineSuggest.enabled - вимкнення автозаповнення команд 
 
 Inside that directory, you can run several commands:
 
