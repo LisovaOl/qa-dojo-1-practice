@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 /// Тест не закінчений. потрібно доопрацювання
+// https://youtu.be/zVz2Ytr5bSE - лекція
+// https://youtu.be/FV9QwYrSxUE - розбір ДЗ
 test.describe("Параметризований тест", async () => {
   const testData = [
     {
